@@ -9,3 +9,4 @@
 - [1. XSS与CSRF](docs/blog/JS/1.XSS与CSRF.md)
 - [2. 通讯协议](docs/blog/JS/2.通讯协议.md)
 - [3. 位操作符](docs/blog/JS/3.位操作符.md)
+- [4. blob](docs/blog/JS/4.blob.md)
