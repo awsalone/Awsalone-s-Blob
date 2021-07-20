@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /*在chrome下移除input[number]的上下箭头*/
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+/*在firefox下移除input[number]的上下箭头*/
+input[type="number"]{-moz-appearance:textfield;}
+  </style>
+</head>
+<body>
+  <input type="file" id="test"/>
+  <img id="img" style="width:200px;height:200px" />
+  <input type="number"/>
+  <script src="./docs/blog/coumon.js"></script>
+  <script>
+  </script>
+</body>
+</html>
