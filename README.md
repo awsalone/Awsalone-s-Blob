@@ -4,7 +4,7 @@
 ## Vue3迁移
 - [1. 全局属性挂载](docs/blog/Vue3/1.全局属性挂载.md)
 - [2.composition API ](docs/blog/Vue3/2.compositionAPI.md)
-- [3.composition API ](docs/blog/Vue3/3.proxy.md)
+- [3.proxy](docs/blog/Vue3/3.proxy.md)
 
 ## Vue
 - [1. 混入](docs/blog/Vue/混入.md)
