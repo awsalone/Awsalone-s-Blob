@@ -1,0 +1,11 @@
+index.js 根文件
+引入router，创建handle对象，引入server创建http服务，
+
+server.js 服务器创建
+接受参数route,handle
+引入url http，url.parse(req.url).pathname
+执行route
+
+router.js 路由
+接受handle，pathname
+判断handle[pathname] 函数类型？执行：报错
