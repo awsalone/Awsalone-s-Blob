@@ -1177,9 +1177,3 @@ TS书：
 <meta http-equiv="Expires" content="0" />
 
 在head标签加上这个好像有用
-
-
-
-
-
-http://localhost:8096/bcmall-wx/bcmall/773/vendingMachine/productList.htm?machineId=1000000029&&openidDES=6645F2ACB1C5AEA97EECB574B6C2EC84#
