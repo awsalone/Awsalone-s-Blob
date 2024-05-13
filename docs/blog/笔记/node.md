@@ -33,3 +33,29 @@ node避免阻塞业务逻辑的执行通过 事件、异步API、非阻塞I/O
 
 
 
+# node 连接数据库
+
+knex库，为数据库连接提供封装 并且对不同的查询客户端以及 SQL 方言的执行结果进行了标准化
+
+```js
+// 同时需安装对应数据库的包
+const config = {
+  client: process.env.DB_CONNECTION,
+  connection: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+  },
+  log: {
+    error (message) {
+      console.log('[knex error]', message)
+    }
+  }
+}
+const knex = require("knex")(config);
+//	knex(table).select();
+// knex(table).where('id','=',id).update(params)
+```
+

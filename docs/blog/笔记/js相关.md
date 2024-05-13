@@ -312,6 +312,7 @@ eventloop:
        Parent5.call(this);
        this.type = 'child5';
      }
+     // 避免了不必要的parent实例的创建
      Child5.prototype = Object.create(Parent5.prototype);
      Child5.prototype.constructor = Child5;
    
@@ -1177,3 +1178,36 @@ TS书：
 <meta http-equiv="Expires" content="0" />
 
 在head标签加上这个好像有用
+
+
+### http
+
+http1.0
+
+* 浏览器和服务器建立短暂连接，每次请求都要重新建立tcp连接
+
+http1.1
+
+* 建立持久连接，请求完毕后不会关闭，可以被多个请求复用
+* 同一个tcp，可以发起多个请求
+* 虽然复用了tcp，但在一次tcp请求中，请求按序，会导致队头堵塞
+
+http2
+
+* 多路复用 (一个连接中，服务器和客户端可以同时发送多个请求，不用按序，避免队头堵塞)
+* 二进制分帧 (http2中以二进制格式传递数据，将请求和响应分割成更小的帧，并且采用二进制编码。同域名下，所有通信都在单个连接上完成，可以承载任意数量双向数据流，数据流以消息的形式发送，消息由一个或多个帧组成，多个帧可以乱序，通过帧首部内流标识重新组合)
+* 首部压缩
+* 服务器推送
+
+
+#### 两次请求？
+
+cors发起的options预请求
+
+当发起复杂请求时在实际进行请求之前，需要发起预检请求的请求。
+
+非简单请求即复杂请求
+
+* 请求方法GET、POST、HEAD
+* 无自定义请求头
+* Content-Type只能是`text/plain` `multipart/form-data` `application/x-www-form-urlencoded`

@@ -214,4 +214,70 @@ module: {
 
 
 
-​		
+## Tips
+1. webpack的动态导入是基于代码的静态分析来工作的，当`import`中有变量时，webpack无法确切知道它指向哪个文件，而会采取保守策略，即打包所有可能匹配的文件，以确保能成功解析到正确模块
+
+## 动态引入图片使用require原因
+
+**动态添加src被当做静态资源处理了，而被编译过后的静态路径无法正确的引入资源，所以要加上require**
+
+**动态添加的src最终会编译成一个静态的字符串地址。程序运行的时候，会按照这个地址去项目目录中引入资源。而 去项目目录中引入资源的这种方式，就是将该资源当成了静态资源**
+
+**因为动态的添加的src编译过后的地址，与图片资源编译过后的资源地址不一致， 导致无法正确的引入资源**
+
+使用require方法引入一张图片的时候，webpack会将这张图片当成一个模块，并根据配置文件中的规则进行打包；
+
+直接动态引入无法显示，被识别为静态资源，编译过后的文件地址合资源地址不一致，无法正确引入；
+
+**通过require方法拿到的文件地址，是资源文件编译过后的文件地址（dist下生成的文件或base64文件），因此可以找对应的文件，从而成功引入资源。**
+
+webpack编译的vue文件的时候，遇见src等属性会默认的使用require引入资源路径
+
+动态引入一张图片的时候，src后面的属性值，实际上是一个变量。webpack会根据v-bind指令去解析src后面的属性值。并不会通过reuqire引入资源路径。这也是为什么需要手动的添加require。
+
+https://juejin.cn/post/7159921545144434718#heading-1
+
+
+## 优化
+优化构建速度乐意从`定向查找`、`减小构建大小` 、`合理缓存`、 `并行构建提升总体速度`、 `并行压缩提高构建效率`
+![alt text](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3a6351bdb29479a820eb97a0ec64374~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
+
+
+
+## sourcemap
+
+| **关键字** | **描述** |
+| :----:| :---: |
+| inline | 代码内通过 dataUrl 形式引入 SourceMap |
+| hidden | 生成 SourceMap 文件，但不使用 |
+| eval | eval(...) 形式执行代码，通过 dataUrl 形式引入 SourceMap |
+| nosources | 不生成sourcemap |
+| cheap | 只需定位到行信息，不需要列信息 |
+| module | 展示源代码中的错误位置# |
+
+## TreeShaking
+
+* 要求使用ESM规范编写代码
+
+* 配置 `optimization.usedExports` 为 `true`，启动标记功能
+* 启动代码优化功能，可以通过如下方式实现：
+  - 配置 `mode = production`
+  - 配置 `optimization.minimize = true`
+  - 提供 `optimization.minimizer` 数组
+
+tree-shaking 的删除过程类似于js 的垃圾收集：分析 -> 标记 -> 清除
+
+# Vite
+
+no bundle 利用浏览器支持原生esmodule并不提供打包，script type='modules'时，对import的文件，浏览器会主动请求资源，在请求的时候通过中间件对模块做编译。
+
+依赖预构建：将commonjs、umd转换为es模块，**性能：** 为了提高后续页面的加载性能，Vite将那些具有许多内部模块的 ESM 依赖项转换为单个模块避免大量请求导致的浏览器端的网络拥塞
+
+
+
+
+
+开发环境使用esbuild（es转换、transform (ts->js)），生产环境使用rollup。
+
+esbuild：`Go` 语言开发，可以多线程打包，代码直接编译成机器码；但在生产环境中代码分割和css处理不完善，
+
