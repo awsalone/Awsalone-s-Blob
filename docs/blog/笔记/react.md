@@ -426,3 +426,12 @@ Idle 一些没有必要的任务，可能不会执行。
 
 ## fiber
 
+## React.lazy()
+
+React.lazy(() => import('./a'))
+内部模拟PromiseA,在初次执行时会进行init，注册then事件返回渲染组件的defaultExport。由于处于PENDING状态，会throw 该promise，在Suspense组件中，会catch到该错误，Suspense 会处理 Promise ，Promise 执行成功回调得到 defaultExport（将想要渲染组件），然后 Susponse 发起第二次渲染，第二次 init 方法已经是 Resolved 成功状态，那么直接返回 result 也就是真正渲染的组件。这时候就可以正常渲染组件了。
+
+[参考地址][https://juejin.cn/book/6945998773818490884/section/6959807335720026150?enter_from=course_center&utm_source=course_center#heading-3]
+
+
+

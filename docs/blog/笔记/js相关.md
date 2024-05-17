@@ -1211,3 +1211,9 @@ cors发起的options预请求
 * 请求方法GET、POST、HEAD
 * 无自定义请求头
 * Content-Type只能是`text/plain` `multipart/form-data` `application/x-www-form-urlencoded`
+
+### 埋点
+
+代码埋点，引入sdk全埋点，可视化埋点
+
+数据传送方式：xhr，image对象，beacon
